@@ -85,11 +85,13 @@ Route::middleware('admin')->group(function () {
     Route::POST('/admin/add/data', [AdminController::class, 'add'])->name('doctors.add');
     Route::get('/admin/patient/data', [AdminController::class, 'get_list'])->name('manage.patient'); 
     Route::POST('/admin/patients/add', [AdminController::class, 'createpatients'])->name('patients.add');
+    
     Route::get('/admin/patients/manage/{id?}', [AdminController::class, 'editpatients'])->name('patients.update'); 
     Route::delete('/admin/patients/{patients}', [AdminController::class, 'destroy_patients'])->name('patients.destroy'); 
     Route::PUT('/admin/patients/{id}', [AdminController::class, 'updatespatients'])->name('patients.updatesubmit');
     Route::get('/admin/pasthistory', [AdminController::class, 'past_history'])->name('admin.history');  
     Route::get('/patient/history/{id}/download', [AdminController::class, 'downloadHistory'])->name('patient.history.download');
+
 });
 
 Route::middleware('doctor')->group(function () {
@@ -107,7 +109,7 @@ Route::get('/doctor/treatment/data', [DoctorController::class, 'get_treatment_li
 });
 
 Route::middleware('patient')->group(function () {
-    Route::get('/treatment/data', [PatientController::class, 'treatment_dashboard'])->name('treatment.dashboard');
+    Route::get('/patient/dashboard', [PatientController::class, 'treatment_dashboard'])->name('treatment.dashboard');
     Route::get('/diagnoses/dashboard', [PatientController::class, 'diagnosis_dashboard'])->name('diagnoses.dashboard'); 
     
     

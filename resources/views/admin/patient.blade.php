@@ -40,7 +40,7 @@
             @endif
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-                <h3 class="text-primary">Doctors List</h3>
+                <h3 class="text-primary">Patient List</h3>
                 <a href="{{ route('patients.update') }}" class="btn btn-success">
                     <i class="bi bi-plus-lg"></i> Add Patient
                 </a>

@@ -188,6 +188,7 @@ class AdminController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'unique:users,email'],
             'dob' => ['required', 'date'],
+            'password' => ['required'],
             'gender' => ['required', 'in:male,female,other'],
             'blood_group' => ['required', 'string', 'max:5'],
             'contact' => ['required', 'string', 'regex:/^[0-9]{10}$/'],
@@ -198,6 +199,7 @@ class AdminController extends Controller
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'password' => $request->password,
                 'role' => 'patient',
             ]);
 
@@ -217,26 +219,67 @@ class AdminController extends Controller
     }
 
     public function past_history(Request $request){
-        $patientHistory = DB::table('patients')
-            ->join('users', 'patients.user_id', '=', 'users.id')
-            ->join('diagnoses', 'patients.id', '=', 'diagnoses.patient_id')
-            ->join('doctors', 'diagnoses.doctor_id', '=', 'doctors.id')
-            ->join('users as doctor_users', 'doctors.user_id', '=', 'doctor_users.id')
-            ->leftJoin('treatments', 'diagnoses.id', '=', 'treatments.diagnosis_id')
-            // ->where('patients.id', $patientId)
-            ->get();
-
-            return view('admin.comppast_history', compact('patientHistory'));
+       
+       
+        $patientHistory = Patient::all(); 
+        $diagnosis = Diagnosis::all();
+        $treatment = Treatment::all();
+                                       
+            return view('admin.past_history', compact('patientHistory','diagnosis','treatment'));
 
     }
 
-    public function downloadHistory($id)
-{
-    $patientHistory = Patient::with(['diagnoses.treatments', 'diagnoses.doctor.user'])
-        ->where('id', $id)
-        ->first();
 
-    $pdf = Pdf::loadView('pdf.patient_history', compact('patientHistory'));
-    return $pdf->download('patient_history.pdf');
-}
+
+
+
+    
+    // public function downloadPDF()
+    // {
+        
+        // $data = DB::table('patients')
+    // ->join('users as patient_user', 'patients.user_id', '=', 'patient_user.id') // Get patient name
+    // ->leftJoin('diagnoses', 'patients.id', '=', 'diagnoses.patient_id')
+    // ->leftJoin('doctors', 'diagnoses.doctor_id', '=', 'doctors.id')
+    // ->leftJoin('users as doctor_user', 'doctors.user_id', '=', 'doctor_user.id') // Get doctor name
+    // ->leftJoin('treatments', 'diagnoses.id', '=', 'treatments.diagnosis_id') // Correct way to join treatments
+    // ->leftJoin('allergies', 'patients.id', '=', 'allergies.patient_id') // Optional allergy data
+    // ->select(
+        // 'patient_user.name as patient_name',
+        // 'patients.dob',
+        // 'patients.gender',
+        // 'patients.blood_group',
+        // 'diagnoses.diagnosis',
+        // 'diagnoses.symptoms',
+        // 'doctor_user.name as doctor_name',
+        // 'treatments.treatment_plan',
+        // 'treatments.medications',
+        // 'treatments.follow_up_instructions',
+        // DB::raw('GROUP_CONCAT(allergies.allergy_name) as allergies') // Fetch allergies as a comma-separated string
+    // )
+    // ->groupBy(
+        // 'patient_user.name', 'patients.dob', 'patients.gender', 'patients.blood_group',
+        // 'diagnoses.diagnosis', 'diagnoses.symptoms', 'doctor_user.name',
+        // 'treatments.treatment_plan', 'treatments.medications', 'treatments.follow_up_instructions'
+    // )
+    // ->first(); // Fetch only one recor
+    // 
+        // if (!$data) {
+            // return redirect()->back()->with('error', 'No patient history found.');
+        // }
+    // 
+        // $pdf = Pdf::loadView('patient_history', compact('data'));
+        // return $pdf->download('patient_history.pdf');
+    // }
+    
+   
+
+
+
+
+
+
+
+
+
 }

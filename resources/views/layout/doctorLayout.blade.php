@@ -22,7 +22,7 @@
 <div class="d-flex flex-column flex-lg-row h-lg-full bg-surface-secondary">
     <!-- Vertical Navbar -->
     <nav class="navbar show navbar-vertical h-lg-screen navbar-expand-lg px-0 py-3 navbar-light bg-white border-bottom border-bottom-lg-0 border-end-lg" id="navbarVertical">
-        <div class="container-fluid">
+        <div>
             <!-- Toggler -->
             <button class="navbar-toggler ms-n2" type="button" data-bs-toggle="collapse" data-bs-target="#sidebarCollapse" aria-controls="sidebarCollapse" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>

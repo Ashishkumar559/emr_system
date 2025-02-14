@@ -1,7 +1,7 @@
 @extends('layout.doctorLayout')
 
 @section('content')
-    <!-- Main content -->
+   
 
     <div class="container mt-5">
    
@@ -67,7 +67,7 @@
     </div>
 </div>
 
-<!-- Image Preview Script -->
+
 <script>
     function previewImage(event) {
         const reader = new FileReader();

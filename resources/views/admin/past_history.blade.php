@@ -1,28 +1,52 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Patient History</title>
-</head>
-<body>
-    <h1>Patient History</h1>
-    <p><strong>Name:</strong> {{ $patientHistory->user->name }}</p>
-    <p><strong>DOB:</strong> {{ $patientHistory->dob }}</p>
-    <p><strong>Gender:</strong> {{ $patientHistory->gender }}</p>
-    <p><strong>Blood Group:</strong> {{ $patientHistory->blood_group }}</p>
+@extends('layout.adminLayout')
 
-    <h2>Diagnoses</h2>
-    @foreach($patientHistory->diagnoses as $diagnosis)
-        <p><strong>Diagnosis:</strong> {{ $diagnosis->diagnosis }}</p>
-        <p><strong>Symptoms:</strong> {{ $diagnosis->symptoms }}</p>
-        <p><strong>Doctor:</strong> {{ $diagnosis->doctor->user->name }}</p>
+@section('content')
 
-        <h3>Treatments</h3>
-        @foreach($diagnosis->treatments as $treatment)
-            <p><strong>Treatment Plan:</strong> {{ $treatment->treatment_plan }}</p>
-            <p><strong>Medications:</strong> {{ $treatment->medications }}</p>
-            <p><strong>Follow-up Instructions:</strong> {{ $treatment->follow_up_instructions }}</p>
-        @endforeach
-        <hr>
-    @endforeach
-</body>
-</html>
+<div class="container mt-4">
+    <h1 class="text-center text-primary mb-4">Patient History</h1>
+
+    @if(isset($patientHistory) && count($patientHistory) > 0)
+        <div class="card shadow-lg p-4">
+            <table class="table table-bordered table-striped">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Name</th>
+                        <th>DOB</th>
+                        <th>Gender</th>
+                        <th>Blood Group</th>
+                        <th>Diagnosis</th>
+                        <th>Symptoms</th>
+                        <th>Doctor</th>
+                        <th>Treatment Plan</th>
+                        <th>Medications</th>
+                        <th>Follow-up</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach($patientHistory as $patient)
+                        @php
+                            $patientDiagnosis = $diagnosis->where('patient_id', $patient->id)->first();
+                            $patientTreatment = $treatment->where('patient_id', $patient->id)->first();
+                        @endphp
+                        <tr>
+                            <td>{{ $patient->name }}</td>
+                            <td>{{ $patient->dob }}</td>
+                            <td>{{ ucfirst($patient->gender) }}</td>
+                            <td>{{ $patient->blood_group }}</td>
+                            <td>{{ $patientDiagnosis->diagnosis ?? 'N/A' }}</td>
+                            <td>{{ $patientDiagnosis->symptoms ?? 'N/A' }}</td>
+                            <td>{{ $patientDiagnosis->doctor_name ?? 'N/A' }}</td>
+                            <td>{{ $patientTreatment->treatment_plan ?? 'N/A' }}</td>
+                            <td>{{ $patientTreatment->medications ?? 'N/A' }}</td>
+                            <td>{{ $patientTreatment->follow_up_instructions ?? 'N/A' }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
+    @else
+        <div class="alert alert-warning text-center">No patient history found.</div>
+    @endif
+</div>
+
+@endsection
