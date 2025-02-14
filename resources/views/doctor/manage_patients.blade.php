@@ -1,7 +1,7 @@
 @extends('layout.adminLayout')
 
 @section('content')
-    <!-- Main content -->
+  
 
     <div class="container mt-5">
    
@@ -18,7 +18,7 @@
         @method('PUT')
     @endif
 
-    <!-- Name Field -->
+  
     <div class="mb-3">
         <label class="form-label">Name</label>
         <input type="text" name="name" class="form-control @error('name') is-invalid @enderror" value="{{ old('name', $patients->user->name ?? '') }}" required>
@@ -27,7 +27,7 @@
         @enderror
     </div>
 
-    <!-- Email Field -->
+
     <div class="mb-3">
         <label class="form-label">Email</label>
         <input type="email" name="email" class="form-control @error('email') is-invalid @enderror" value="{{ old('email', $patients->user->email ?? '') }}" {{ isset($patients)}} required>
@@ -36,7 +36,7 @@
         @enderror
     </div>
 
-    <!-- Password Field (Only for Add) -->
+   
     @if(!isset($patients))
     <div class="mb-3">
         <label class="form-label">Password</label>
@@ -47,7 +47,7 @@
     </div>
     @endif
 
-    <!-- Date of Birth Field -->
+  
     <div class="mb-3">
         <label class="form-label">Date of Birth</label>
         <input type="date" name="dob" class="form-control @error('dob') is-invalid @enderror" value="{{ old('dob', $patients->dob ?? '') }}" required>
@@ -56,7 +56,7 @@
         @enderror
     </div>
 
-    <!-- Gender Field -->
+    
     <div class="mb-3">
         <label class="form-label">Gender</label>
         <select name="gender" class="form-control @error('gender') is-invalid @enderror" required>
@@ -69,7 +69,7 @@
         @enderror
     </div>
 
-    <!-- Blood Group Field -->
+
     <div class="mb-3">
         <label class="form-label">Blood Group</label>
         <input type="text" name="blood_group" class="form-control @error('blood_group') is-invalid @enderror" value="{{ old('blood_group', $patients->blood_group ?? '') }}" required>
@@ -78,7 +78,7 @@
         @enderror
     </div>
 
-    <!-- Contact Field -->
+ 
     <div class="mb-3">
         <label class="form-label">Contact</label>
         <input type="text" name="contact" class="form-control @error('contact') is-invalid @enderror" value="{{ old('contact', $patients->contact ?? '') }}" required>
@@ -87,7 +87,7 @@
         @enderror
     </div>
 
-    <!-- Address Field -->
+ 
     <div class="mb-3">
         <label class="form-label">Address</label>
         <textarea name="address" class="form-control @error('address') is-invalid @enderror" required>{{ old('address', $patients->address ?? '') }}</textarea>
@@ -96,13 +96,13 @@
         @enderror
     </div>
 
-    <!-- Submit Button -->
+   
     <button type="submit" class="btn btn-primary">{{ isset($patients) ? 'Update Patient' : 'Add Patient' }}</button>
 </form>
     </div>
 </div>
 
-<!-- Image Preview Script -->
+
 <script>
     function previewImage(event) {
         const reader = new FileReader();
